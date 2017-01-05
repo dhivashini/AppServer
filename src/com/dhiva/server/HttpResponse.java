@@ -56,7 +56,6 @@ public class HttpResponse {
 	public void setResponseBody(byte[] mybytearray) {
 		this.responseBody = mybytearray;
 	}
-
 	public byte[] getResponseBody() {
 		return responseBody;
 	}
