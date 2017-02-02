@@ -537,4 +537,10 @@ getResourcePaths("/") would return {"/welcome.html", "/catalog/", "/customer/", 
 		}
 	}
 
+	@Override
+	public String getVirtualServerName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

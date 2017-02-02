@@ -1,5 +1,7 @@
 package com.dhiva.server;
 
+import java.net.Socket;
+
 public class HttpResponse {
 	private String responseHeader;
 	private byte[] responseBody; 
@@ -8,6 +10,7 @@ public class HttpResponse {
 	private String contentType;
 	private String httpVersion;
 	private String date;
+	Socket currentClient;
 
 	public void setHttpVersion(String httpVersion) {
 		this.httpVersion = httpVersion;
@@ -59,4 +62,13 @@ public class HttpResponse {
 	public byte[] getResponseBody() {
 		return responseBody;
 	}
+//------------
+	public void setWriter(Socket currentClient) {
+		this.currentClient = currentClient;
+	}
+	
+	public Socket getWriter() {
+		return this.currentClient;
+	}
+	//-----------
 }
