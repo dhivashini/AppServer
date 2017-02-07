@@ -10,7 +10,7 @@ public class HelloWorld extends HttpServlet {
        throws java.io.IOException
   {
     response.setContentType("text/html");
-    PrintWriter out = response.getWriter();
+    ServletOutputStream out = response.getOutputStream();
     out.println("<html><head><title>Test</title></head><body>");
     out.println("RequestURL: ["+request.getRequestURL()+"]<br>");
     out.println("RequestURI: ["+request.getRequestURI()+"]<br>");

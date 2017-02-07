@@ -69,7 +69,10 @@ public class ClientProcessingRunnable implements Runnable {
 		//-------
 		responseObj.setWriter(currentClient);
 		HelloWorld servObj = new HelloWorld();
-		servObj.doGet(requestObj, responseObj);
+		FakeServletRequest servReq = new FakeServletRequest();
+		FakeServletResponse servResp = new FakeServletResponse(currentClient);
+		
+		servObj.doGet(servReq, servResp);
 		
 		//------
 		sendClientFile(currentClient, responseObj);
