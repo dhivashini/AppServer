@@ -1,5 +1,6 @@
 package com.dhiva.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -63,19 +64,18 @@ public class ClientProcessingRunnable implements Runnable {
 		StringBuffer clientRequest = socketObj.readrequest();
 		HttpRequestParser parseObj = new HttpRequestParser(clientRequest);
 		HttpRequest requestObj = parseObj.parse();
-		CreateResponse createResponseObj = new CreateResponse(requestObj);
-		createResponseObj.setRootDirectory(rootDirectory);
-		HttpResponse responseObj = createResponseObj.createResponseBody();
-		//-------
-		responseObj.setWriter(currentClient);
+		//---
+		HttpResponse responseObj = new HttpResponse();
+		responseObj.setCurrentClient(currentClient);
 		HelloWorld servObj = new HelloWorld();
-		FakeServletRequest servReq = new FakeServletRequest();
-		FakeServletResponse servResp = new FakeServletResponse(currentClient);
+		servObj.doGet(requestObj, responseObj);
+		//---
+//		CreateResponse createResponseObj = new CreateResponse(requestObj);
+//		createResponseObj.setRootDirectory(rootDirectory);
+//		HttpResponse responseObj = createResponseObj.createResponseBody();
 		
-		servObj.doGet(servReq, servResp);
 		
-		//------
-		sendClientFile(currentClient, responseObj);
+//		sendClientFile(currentClient, responseObj);
 		currentClient.close();
 	}
 

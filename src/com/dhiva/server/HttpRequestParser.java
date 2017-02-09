@@ -13,7 +13,7 @@ public class HttpRequestParser {
 		String[] splited = request.split("\\s+");
 		HttpRequest requestObj = new HttpRequest();
 		requestObj.setHttpMethod(splited[0]);
-		requestObj.setResourceURI(splited[1]);
+		requestObj.setRequestURI(splited[1]);
 		requestObj.setHttpVersion(splited[2]);
 		return requestObj;
 	}

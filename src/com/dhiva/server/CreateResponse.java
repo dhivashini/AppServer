@@ -103,7 +103,7 @@ public class CreateResponse {
 			responseObj.setContentLength(String.valueOf(htmlBody.length()));
 			return responseObj;
 		}
-
+/*
 		if (httpMethod.equals("GET")) {
 			final String FILE_TO_SEND = rootDirectory + resourceURI;
  			File myFile = new File(FILE_TO_SEND);
@@ -160,6 +160,7 @@ public class CreateResponse {
 				return responseObj;
  			}
 		}
+		*/
 		if (httpMethod.equals("HEAD")) {
 			final String FILE_TO_SEND = rootDirectory + resourceURI;
 			File myFile = new File(FILE_TO_SEND);
