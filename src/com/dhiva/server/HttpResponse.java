@@ -1,6 +1,7 @@
 package com.dhiva.server;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Collection;
@@ -101,13 +102,14 @@ public class HttpResponse implements HttpServletResponse {
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
 		// TODO Auto-generated method stub
-		return (ServletOutputStream) currentClient.getOutputStream();
+		return  null;
 	}
 
 	@Override
 	public PrintWriter getWriter() throws IOException {
 		// TODO Auto-generated method stub
-		return null;
+		PrintWriter out = new PrintWriter(currentClient.getOutputStream());
+		return out;
 	}
 
 	@Override

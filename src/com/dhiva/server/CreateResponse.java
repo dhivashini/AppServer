@@ -33,7 +33,7 @@ public class CreateResponse {
 		// Check for HTTP Version
 		String httpVersion = requestObj.getHttpVersion();
 		String httpMethod = requestObj.getHttpMethod();
-		String resourceURI = requestObj.getResourceURI();
+		String resourceURI = requestObj.getRequestURI();
 		// ClientProcessingRunnable clientObj = new ClientProcessingRunnable();
 		// this.rootDirectory = clientObj.getRootDirectory();
 		// responseObj.setHttpVersion(httpVersion);
@@ -196,7 +196,7 @@ public class CreateResponse {
 	}
 
 	private void setFileType() {
-		String resourceURI = requestObj.getResourceURI();
+		String resourceURI = requestObj.getRequestURI();
 		if (resourceURI.endsWith(".jpeg") || resourceURI.endsWith(".jpg")) {
 			responseObj.setContentType("image/jpeg");
 		} else if (resourceURI.endsWith(".bmp")) {

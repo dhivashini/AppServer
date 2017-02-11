@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 import com.dhiva.server.HttpRequest.HttpMethod;
-import com.dhiva.servlets.HelloWorld;
+
 
 public class ClientProcessingRunnable implements Runnable {
 	// instance variable
@@ -67,8 +67,13 @@ public class ClientProcessingRunnable implements Runnable {
 		//---
 		HttpResponse responseObj = new HttpResponse();
 		responseObj.setCurrentClient(currentClient);
-		HelloWorld servObj = new HelloWorld();
-		servObj.doGet(requestObj, responseObj);
+		try{
+		//HelloWorld servObj = new HelloWorld();
+		//servObj.doGet(requestObj, responseObj);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 		//---
 //		CreateResponse createResponseObj = new CreateResponse(requestObj);
 //		createResponseObj.setRootDirectory(rootDirectory);
