@@ -17,6 +17,7 @@ import com.dhiva.server.ServerApp;
  */
 public class TestHarness {
 	// private static Logger logger = Logger.getLogger(ServletsInit.class);
+
 	public static HashMap<String, HttpServlet> servlets;
 	public static HashMap<String, String> mappings = new HashMap<String, String>();
 	public static String webxml = null;
@@ -84,8 +85,9 @@ public class TestHarness {
 			}
 
 			else if (m_state == 50) {
+				if (!urlMappings.containsKey(sname))
+					urlMappings.put(sname, value);
 
-				urlMappings.put(sname, value);
 			}
 
 			else if (m_state == 45) {
@@ -157,28 +159,27 @@ public class TestHarness {
 		// System.out.println("DONE AOfghhDING SERVLETS");
 		boolean status = false;
 		try {
-			System.out.println("TRACK0");
 			Handler h = parseWebdotxml(args);
-			System.out.println("TRACK1");
 			webxml = args;
 			FakeContext context = createContext(h);
-			System.out.println("TRACK2");
 			servlets = createServlets(h, context);
-			System.out.println("TRACK3");
 			status = true;
-			System.out.println("DONE LAODING SERVLETS");
-			System.out.println(servlets);
-			System.out.println(mappings);
 		}
 
 		catch (Exception e) {
 			e.printStackTrace();
-			// logger.error(e.toString());
 			status = false;
-			// System.out.println(e.toString()+" ERROR IN SERVLET INIT");
 		}
 
 		return status;
 
+	}
+
+	public HashMap<String, HttpServlet> getServlets() {
+		return TestHarness.servlets;
+	}
+
+	public HashMap<String, String> getServeletMapping() {
+		return TestHarness.mappings;
 	}
 }

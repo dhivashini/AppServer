@@ -4,9 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.HashMap;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 
 import com.dhiva.server.HttpRequest.HttpMethod;
-
+import com.dhiva.test.TestHarness;
 
 public class ClientProcessingRunnable implements Runnable {
 	// instance variable
@@ -27,7 +31,7 @@ public class ClientProcessingRunnable implements Runnable {
 	public void setRunnableState(boolean isStopped) {
 		this.runnableState = isStopped;
 	}
-	
+
 	public void setRootDirectory(String rootDirectory) {
 		this.rootDirectory = rootDirectory;
 	}
@@ -64,24 +68,33 @@ public class ClientProcessingRunnable implements Runnable {
 		StringBuffer clientRequest = socketObj.readrequest();
 		HttpRequestParser parseObj = new HttpRequestParser(clientRequest);
 		HttpRequest requestObj = parseObj.parse();
-		//---
-		HttpResponse responseObj = new HttpResponse();
-		responseObj.setCurrentClient(currentClient);
-		try{
-		//HelloWorld servObj = new HelloWorld();
-		//servObj.doGet(requestObj, responseObj);
+		TestHarness testObj = new TestHarness();
+		HashMap<String, HttpServlet> servlets = testObj.getServlets();
+		HashMap<String, String> mappings = testObj.getServeletMapping();
+		String servletName = null;
+		String resourceURI = requestObj.getRequestURI();
+		if (requestObj.getHttpMethod().equals("GET") && mappings.containsValue(resourceURI)) {
+			for (String name : mappings.keySet()) {
+				if (mappings.get(name).equals(resourceURI)) {
+					servletName = name;
+				}
+			}
+
+			HttpServlet s = servlets.get(servletName);
+			HttpResponse responseObj = new HttpResponse();
+			try {
+				s.service(requestObj, responseObj);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
+
+		} else {
+			CreateResponse createResponseObj = new CreateResponse(requestObj);
+			createResponseObj.setRootDirectory(rootDirectory);
+			HttpResponse responseObj = createResponseObj.createResponseBody();
+			sendClientFile(currentClient, responseObj);
+			currentClient.close();
 		}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		//---
-//		CreateResponse createResponseObj = new CreateResponse(requestObj);
-//		createResponseObj.setRootDirectory(rootDirectory);
-//		HttpResponse responseObj = createResponseObj.createResponseBody();
-		
-		
-//		sendClientFile(currentClient, responseObj);
-		currentClient.close();
 	}
 
 	private void sendClientFile(Socket currentClient, HttpResponse responseObj) {
@@ -97,6 +110,5 @@ public class ClientProcessingRunnable implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 
 }

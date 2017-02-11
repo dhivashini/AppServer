@@ -9,10 +9,14 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.servlet.http.HttpServlet;
+
 import com.dhiva.server.HttpRequest.HttpMethod;
+import com.dhiva.test.TestHarness;
 
 public class CreateResponse {
 	private HttpRequest requestObj;
@@ -103,64 +107,66 @@ public class CreateResponse {
 			responseObj.setContentLength(String.valueOf(htmlBody.length()));
 			return responseObj;
 		}
-/*
+
 		if (httpMethod.equals("GET")) {
-			final String FILE_TO_SEND = rootDirectory + resourceURI;
- 			File myFile = new File(FILE_TO_SEND);
- 			if (!myFile.exists()) {
- 				String statusCode = "404 Not Found";
- 				String htmlBody = "<html><body>" + statusCode + "</body></html>";
- 				responseObj.setStatusCode(statusCode);
- 				responseObj.setResponseBody(htmlBody.getBytes());
- 				responseObj.setContentType("text/html");
- 				getGMTDateTime();
- 				responseObj.setContentLength(String.valueOf(htmlBody.length()));
- 				return responseObj;
- 			} else if (myFile.exists() && myFile.isFile()) {
- 				byte[] mybytearray = new byte[(int) myFile.length()];
- 				String statusCode = "200 OK";
- 				BufferedInputStream bis;
- 				try {
- 					bis = new BufferedInputStream(new FileInputStream(myFile));
- 					bis.read(mybytearray, 0, mybytearray.length);
- 					bis.close();
- 				} catch (Exception e) {
- 					e.printStackTrace();
- 				}
- 				responseObj.setStatusCode(statusCode);
- 				setFileType();
- 				getGMTDateTime();
- 				responseObj.setContentLength(String.valueOf(mybytearray.length));
- 				responseObj.setResponseBody(mybytearray);
- 				return responseObj;
- 			} else if (myFile.exists() && myFile.isDirectory()) {
- 				File[] listOfFiles = myFile.listFiles();
- 				List<String> results = new ArrayList<String>();
- 				String statusCode = "200 OK";
-				String startTag;
-				String endTag;
-				String displayName;
-				String link ="";
- 				for (File file : listOfFiles) {
- 					if (file.isFile()) {
- 						results.add(file.getName());
- 					}
- 				}
- 				for (String fileName : results) {
-					startTag = "<!DOCTYPE html> <html> <body><a href=\"";
-					endTag = "</a></body> </html>";
-					displayName = "\">" + fileName;
-					link += startTag + myFile.getName() + "/" + fileName + displayName + endTag;				
- 				}
-				responseObj.setStatusCode(statusCode);
-				responseObj.setContentLength(String.valueOf(link.length()));
-				responseObj.setResponseBody(link.getBytes());
-				responseObj.setContentType("text/html");
-				getGMTDateTime();
-				return responseObj;
- 			}
+			
+				final String FILE_TO_SEND = rootDirectory + resourceURI;
+				File myFile = new File(FILE_TO_SEND);
+				if (!myFile.exists()) {
+					String statusCode = "404 Not Found";
+					String htmlBody = "<html><body>" + statusCode + "</body></html>";
+					responseObj.setStatusCode(statusCode);
+					responseObj.setResponseBody(htmlBody.getBytes());
+					responseObj.setContentType("text/html");
+					getGMTDateTime();
+					responseObj.setContentLength(String.valueOf(htmlBody.length()));
+					return responseObj;
+				} else if (myFile.exists() && myFile.isFile()) {
+					byte[] mybytearray = new byte[(int) myFile.length()];
+					String statusCode = "200 OK";
+					BufferedInputStream bis;
+					try {
+						bis = new BufferedInputStream(new FileInputStream(myFile));
+						bis.read(mybytearray, 0, mybytearray.length);
+						bis.close();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					responseObj.setStatusCode(statusCode);
+					setFileType();
+					getGMTDateTime();
+					responseObj.setContentLength(String.valueOf(mybytearray.length));
+					responseObj.setResponseBody(mybytearray);
+					return responseObj;
+				} else if (myFile.exists() && myFile.isDirectory()) {
+					File[] listOfFiles = myFile.listFiles();
+					List<String> results = new ArrayList<String>();
+					String statusCode = "200 OK";
+					String startTag;
+					String endTag;
+					String displayName;
+					String link = "";
+					for (File file : listOfFiles) {
+						if (file.isFile()) {
+							results.add(file.getName());
+						}
+					}
+					for (String fileName : results) {
+						startTag = "<!DOCTYPE html> <html> <body><a href=\"";
+						endTag = "</a></body> </html>";
+						displayName = "\">" + fileName;
+						link += startTag + myFile.getName() + "/" + fileName + displayName + endTag;
+					}
+					responseObj.setStatusCode(statusCode);
+					responseObj.setContentLength(String.valueOf(link.length()));
+					responseObj.setResponseBody(link.getBytes());
+					responseObj.setContentType("text/html");
+					getGMTDateTime();
+					return responseObj;
+				}
+			
 		}
-		*/
+
 		if (httpMethod.equals("HEAD")) {
 			final String FILE_TO_SEND = rootDirectory + resourceURI;
 			File myFile = new File(FILE_TO_SEND);
