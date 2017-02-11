@@ -1,6 +1,5 @@
 package com.dhiva.server;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -9,7 +8,6 @@ import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.dhiva.server.HttpRequest.HttpMethod;
 import com.dhiva.test.TestHarness;
 
 public class ClientProcessingRunnable implements Runnable {
@@ -82,6 +80,8 @@ public class ClientProcessingRunnable implements Runnable {
 
 			HttpServlet s = servlets.get(servletName);
 			HttpResponse responseObj = new HttpResponse();
+			responseObj.setCurrentClient(currentClient);
+
 			try {
 				s.service(requestObj, responseObj);
 			} catch (ServletException e) {
