@@ -6,13 +6,13 @@ import java.util.*;
 /**
  * @author Nick Taylor
  */
-class FakeConfig implements ServletConfig {
+class ServletsConfig implements ServletConfig {
 	private String name;
 	// private static Logger logger = Logger.getLogger(ServletsConfig.class);
-	private FakeContext context;
+	private ServletsContext context;
 	private HashMap<String,String> initParams;
 	
-	public FakeConfig(String name, FakeContext context) {
+	public ServletsConfig(String name, ServletsContext context) {
 		this.name = name;
 		this.context = context;
 		initParams = new HashMap<String,String>();

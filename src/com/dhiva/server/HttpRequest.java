@@ -62,7 +62,6 @@ public class HttpRequest implements HttpServletRequest {
 		this.resourceURI = requestFile;
 	}
 	
-	@Override
 	public String getRequestURI() {
 		return resourceURI;
 	}
@@ -293,103 +292,86 @@ public class HttpRequest implements HttpServletRequest {
 		return null;
 	}
 
-	@Override
 	public boolean authenticate(HttpServletResponse arg0) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public String changeSessionId() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getAuthType() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getContextPath() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Cookie[] getCookies() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public long getDateHeader(String arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public String getHeader(String arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Enumeration<String> getHeaderNames() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Enumeration<String> getHeaders(String arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public int getIntHeader(String arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public String getMethod() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.httpMethod.toString();
 	}
 
-	@Override
 	public Part getPart(String arg0) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Collection<Part> getParts() throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getPathInfo() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getPathTranslated() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getQueryString() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getRemoteUser() {
 		// TODO Auto-generated method stub
 		return null;
@@ -397,85 +379,71 @@ public class HttpRequest implements HttpServletRequest {
 
 	
 	
-	@Override
 	public StringBuffer getRequestURL() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getRequestedSessionId() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String getServletPath() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public HttpSession getSession() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public HttpSession getSession(boolean arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Principal getUserPrincipal() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public boolean isRequestedSessionIdFromCookie() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isRequestedSessionIdFromURL() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isRequestedSessionIdValid() {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public boolean isUserInRole(String arg0) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	@Override
 	public void login(String arg0, String arg1) throws ServletException {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void logout() throws ServletException {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public <T extends HttpUpgradeHandler> T upgrade(Class<T> arg0) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		return null;

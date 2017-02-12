@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * @author Nick Taylor
  */
-public class FakeContext implements ServletContext {
+public class ServletsContext implements ServletContext {
 	private HashMap<String,Object> attributes;
 	private HashMap<String,String> initParams;
 	private HashMap<String,HttpServlet> servlets;
@@ -22,7 +22,7 @@ public class FakeContext implements ServletContext {
 	
 	
 	//DEFAULT CONSTRUCTOR TO CREATE ALL HASH TABLES
-	public FakeContext() {
+	public ServletsContext() {
 		attributes = new HashMap<String,Object>();
 		initParams = new HashMap<String,String>();
 	}

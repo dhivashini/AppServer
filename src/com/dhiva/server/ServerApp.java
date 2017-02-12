@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import javax.servlet.http.HttpServlet;
 
-import com.dhiva.test.FakeContext;
+import com.dhiva.test.ServletsContext;
 import com.dhiva.test.TestHarness;
 
 public class ServerApp {
@@ -19,7 +19,7 @@ public class ServerApp {
 	private static String webXmlLocation;
 	static String rootDirectory;
 	private HashMap<String,String> servletMapping = new HashMap<String, String>(); 
-	private FakeContext servletContext;
+	private ServletsContext servletContext;
 	private HashMap<String,HttpServlet> servlets;
 
 	
@@ -116,11 +116,11 @@ public class ServerApp {
 		this.servletMapping = servletMapping;
 	}
 	
-	public FakeContext getServletContext() {
+	public ServletsContext getServletContext() {
 		return servletContext;
 	}
 
-	public void setServletContext(FakeContext servletContext) {
+	public void setServletContext(ServletsContext servletContext) {
 		this.servletContext = servletContext;
 	}
 	

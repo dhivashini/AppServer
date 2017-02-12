@@ -122,8 +122,8 @@ public class TestHarness {
 	}
 
 	// FUNCTION TO CREATE CONTEXT FOR THIS WEB APP
-	private static FakeContext createContext(Handler h) {
-		FakeContext fc = new FakeContext();
+	private static ServletsContext createContext(Handler h) {
+		ServletsContext fc = new ServletsContext();
 		for (String param : h.m_contextParams.keySet()) {
 			fc.setInitParam(param, h.m_contextParams.get(param));
 		}
@@ -131,10 +131,10 @@ public class TestHarness {
 	}
 
 	// FUNCTION TO STORE ALL THE SERVLETS IN HASH MAP BASED ON THEIR NAME
-	private static HashMap<String, HttpServlet> createServlets(Handler h, FakeContext fc) throws Exception {
+	private static HashMap<String, HttpServlet> createServlets(Handler h, ServletsContext fc) throws Exception {
 		HashMap<String, HttpServlet> servlets = new HashMap<String, HttpServlet>();
 		for (String servletName : h.m_servlets.keySet()) {
-			FakeConfig config = new FakeConfig(servletName, fc);
+			ServletsConfig config = new ServletsConfig(servletName, fc);
 			String className = h.m_servlets.get(servletName);
 			Class servletClass = Class.forName(className);
 			HttpServlet servlet = (HttpServlet) servletClass.newInstance();
@@ -161,7 +161,7 @@ public class TestHarness {
 		try {
 			Handler h = parseWebdotxml(args);
 			webxml = args;
-			FakeContext context = createContext(h);
+			ServletsContext context = createContext(h);
 			servlets = createServlets(h, context);
 			status = true;
 		}

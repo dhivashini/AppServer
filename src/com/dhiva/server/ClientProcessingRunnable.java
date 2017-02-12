@@ -83,11 +83,17 @@ public class ClientProcessingRunnable implements Runnable {
 			responseObj.setCurrentClient(currentClient);
 
 			try {
+				
 				s.service(requestObj, responseObj);
-			} catch (ServletException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				//e.printStackTrace();
+				System.out.println(e.getMessage());
+			} finally{
+			System.out.println("here");
+			responseObj.getWriter().flush();
+			currentClient.getOutputStream().flush();
+			currentClient.close();
 			}
-
 		} else {
 			CreateResponse createResponseObj = new CreateResponse(requestObj);
 			createResponseObj.setRootDirectory(rootDirectory);
