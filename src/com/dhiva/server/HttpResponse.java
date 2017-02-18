@@ -1,7 +1,9 @@
 package com.dhiva.server;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Collection;
@@ -16,16 +18,23 @@ public class HttpResponse implements HttpServletResponse {
 	private String responseHeader;
 	private byte[] responseBody;
 	private String statusCode;
+	private int status;
 	private String contentLength;
+	private int contentLeng;
 	private String contentType;
 	private String httpVersion;
 	private String date;
 	Socket currentClient;
 	PrintWriter out;
-	
+	private String input = "C:\\Users\\DHIVA\\Desktop\\servletoutput.txt";
+		
 
 	public void setHttpVersion(String httpVersion) {
 		this.httpVersion = httpVersion;
+	}
+	
+	public String getServletFile(){
+		return this.input;
 	}
 
 	public String getHttpVersion() {
@@ -56,7 +65,7 @@ public class HttpResponse implements HttpServletResponse {
 		return contentType;
 	}
 
-	public void setContentLength(String contentLength) {
+	public void setContentLength(int contentLength) {
 		this.contentLength = "Content-Length: " + contentLength;
 	}
 
@@ -111,8 +120,12 @@ public class HttpResponse implements HttpServletResponse {
 	@Override
 	public PrintWriter getWriter() throws IOException {
 		// TODO Auto-generated method stub
-		
-		return out;
+		try {
+			 out = new PrintWriter(new FileOutputStream(input));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return out ;
 	}
 
 	@Override
@@ -145,16 +158,16 @@ public class HttpResponse implements HttpServletResponse {
 
 	}
 
-	@Override
-	public void setContentLength(int arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	//@Override
+//	public void setContentLength(int arg0) {
+//		// TODO Auto-generated method stub
+//		this.contentLeng = arg0;
+//	}
 
 	@Override
 	public void setContentLengthLong(long arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -225,7 +238,7 @@ public class HttpResponse implements HttpServletResponse {
 
 	public int getStatus() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.status;
 	}
 
 	public void sendError(int arg0) throws IOException {
@@ -260,22 +273,18 @@ public class HttpResponse implements HttpServletResponse {
 
 	public void setStatus(int arg0) {
 		// TODO Auto-generated method stub
-
+		this.status  = arg0;
 	}
 
 	public void setStatus(int arg0, String arg1) {
 		// TODO Auto-generated method stub
-
+		//this.status = arg0;
 	}
 
 	public void setCurrentClient(Socket currentClient) {
 		// TODO Auto-generated method stub
 		this.currentClient = currentClient;
-		try {
-			 out = new PrintWriter(currentClient.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public Socket getCurrentClient() {
