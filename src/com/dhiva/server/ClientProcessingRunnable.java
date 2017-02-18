@@ -69,39 +69,45 @@ public class ClientProcessingRunnable implements Runnable {
 		TestHarness testObj = new TestHarness();
 		HashMap<String, HttpServlet> servlets = testObj.getServlets();
 		HashMap<String, String> mappings = testObj.getServeletMapping();
-		String servletName = null;
 		String resourceURI = requestObj.getRequestURI();
+		
 		if (requestObj.getHttpMethod().equals("GET") && mappings.containsValue(resourceURI)) {
-			for (String name : mappings.keySet()) {
-				if (mappings.get(name).equals(resourceURI)) {
-					servletName = name;
-				}
-			}
-
-			HttpServlet s = servlets.get(servletName);
+			invokeServelets(mappings, resourceURI, requestObj, servlets, currentClient);
+		} 
+		else {
 			HttpResponse responseObj = new HttpResponse();
-			responseObj.setCurrentClient(currentClient);
-
-			try {			
-				s.service(requestObj, responseObj);
-				CreateResponse createResponseObj = new CreateResponse(requestObj,responseObj);
-				createResponseObj.setResourceUri(resourceURI);
-				responseObj = createResponseObj.createResponseBody();
-				sendClientFile(currentClient, responseObj);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			} finally{
-			responseObj.getWriter().flush();
-			currentClient.getOutputStream().flush();
-			currentClient.close();
-			}
-		} else {
-			HttpResponse responseObj = new HttpResponse();
-			CreateResponse createResponseObj = new CreateResponse(requestObj,responseObj);
+			CreateResponse createResponseObj = new CreateResponse(requestObj, responseObj);
 			createResponseObj.setRootDirectory(rootDirectory);
 			responseObj = createResponseObj.createResponseBody();
 			sendClientFile(currentClient, responseObj);
 			currentClient.close();
+		}
+	}
+
+	private void invokeServelets(HashMap<String, String> mappings, String resourceURI, HttpRequest requestObj,
+			HashMap<String, HttpServlet> servlets, Socket currentClient) {
+		String servletName = null;
+		for (String name : mappings.keySet()) {
+			if (mappings.get(name).equals(resourceURI)) {
+				servletName = name;
+			}
+		}
+
+		HttpServlet s = servlets.get(servletName);
+		HttpResponse responseObj = new HttpResponse();
+		responseObj.setCurrentClient(currentClient);
+
+		try {
+			s.service(requestObj, responseObj);
+			CreateResponse createResponseObj = new CreateResponse(requestObj, responseObj);
+			createResponseObj.setResourceUri(resourceURI);
+			responseObj = createResponseObj.createResponseBody();
+			sendClientFile(currentClient, responseObj);
+			responseObj.getWriter().flush();
+			currentClient.getOutputStream().flush();
+			currentClient.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
 		}
 	}
 
