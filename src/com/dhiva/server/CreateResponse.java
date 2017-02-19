@@ -106,13 +106,13 @@ public class CreateResponse {
 		}
 
 		if (httpMethod.equals("GET") && (servletResourceUri == null)) {
-			if(resourceURI.contains("%20")){
-				resourceURI = resourceURI.replaceAll("%20"," ");
-			}	
+			if (resourceURI.contains("%20")) {
+				resourceURI = resourceURI.replaceAll("%20", " ");
+			}
 			final String FILE_TO_SEND = rootDirectory + resourceURI;
-			
+
 			File myFile = new File(FILE_TO_SEND);
-			
+
 			if (!myFile.exists()) {
 				String statusCode = "404 Not Found";
 				String htmlBody = "<html><body>" + statusCode + "</body></html>";
@@ -122,9 +122,8 @@ public class CreateResponse {
 				getGMTDateTime();
 				responseObj.setContentLength(htmlBody.length());
 				return responseObj;
-			}
-			else if (myFile.exists() && myFile.isFile()) {
-				
+			} else if (myFile.exists() && myFile.isFile()) {
+
 				byte[] mybytearray = new byte[(int) myFile.length()];
 				String statusCode = "200 OK";
 				BufferedInputStream bis;
@@ -141,38 +140,40 @@ public class CreateResponse {
 				responseObj.setContentLength(mybytearray.length);
 				responseObj.setResponseBody(mybytearray);
 				return responseObj;
-			} 
-			else if (myFile.exists() && myFile.isDirectory()) {
+			} else if (myFile.exists() && myFile.isDirectory()) {
 				File[] listOfFiles = myFile.listFiles();
 				List<String> results = new ArrayList<String>(listOfFiles.length);
 				String statusCode = "200 OK";
 				String startTag;
 				String endTag;
+				String image ="";
 				String displayName;
 				String link = "";
-				
+
 				for (File file : listOfFiles) {
 					if (file.isFile()) {
+						image = "<img src=\"http://www.sepeb.com/file/image_20170130_072046_59737.png\"style=\"width:20px;height:20px;\">";
 						results.add(file.getName());
 					}
 					if (file.isDirectory()) {
+						image = "<img src=\"folder.jpg\">";
 						results.add(file.getName());
 					}
 				}
-				
+
 				if (myFile.getPath().equals(rootDirectory)) {
 					for (String fileName : results) {
-						startTag = "<!DOCTYPE html> <html></head><body><a href=\"";
+						startTag = "<!DOCTYPE html> <html><body>"+image+"<a href=\"";
 						endTag = "</a></body> </html><br><br>";
 						displayName = "\">" + fileName;
 						link += startTag + fileName + displayName + endTag;
 					}
 				} else {
 					for (String fileName : results) {
-						startTag = "<!DOCTYPE html> <html> <body><a href=\"";
+						startTag = "<!DOCTYPE html> <html> <body>"+image+"<a href=\"";
 						endTag = "</a></body> </html><br><br>";
 						displayName = "\">" + fileName;
-						link += startTag +  myFile.getName() + "/" +fileName + displayName + endTag;
+						link += startTag + myFile.getName() + "/" + fileName + displayName + endTag;
 					}
 				}
 				responseObj.setStatusCode(statusCode);
@@ -190,12 +191,12 @@ public class CreateResponse {
 			File myFile = new File(FILE_TO_SEND);
 			int statusCode = responseObj.getStatus();
 			String status;
-			
+
 			if (statusCode == 200) {
 				byte[] mybytearray = new byte[(int) myFile.length()];
 				status = "200 OK";
 				BufferedInputStream bis;
-				
+
 				try {
 					bis = new BufferedInputStream(new FileInputStream(myFile));
 					bis.read(mybytearray, 0, mybytearray.length);
@@ -203,14 +204,13 @@ public class CreateResponse {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
+
 				responseObj.setStatusCode(status);
 				responseObj.setHttpVersion(httpVersion);
 				getGMTDateTime();
 				responseObj.setResponseBody(mybytearray);
 				return responseObj;
-			} 
-			else {
+			} else {
 				status = "404 Not Found";
 				String htmlBody = "<html><body>" + status + "</body></html>";
 				responseObj.setStatusCode(status);
