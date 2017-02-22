@@ -91,7 +91,7 @@ public class HttpRequest implements HttpServletRequest {
 	@Override
 	public String getCharacterEncoding() {
 		// TODO Auto-generated method stub
-		return null;
+		return "ISO-8859-1";
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class HttpRequest implements HttpServletRequest {
 	@Override
 	public String getScheme() {
 		// TODO Auto-generated method stub
-		return null;
+		return "http";
 	}
 
 	@Override
@@ -304,7 +304,7 @@ public class HttpRequest implements HttpServletRequest {
 
 	public String getAuthType() {
 		// TODO Auto-generated method stub
-		return null;
+		return "BASIC";
 	}
 
 	public String getContextPath() {

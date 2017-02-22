@@ -102,7 +102,7 @@ public class HttpResponse implements HttpServletResponse {
 	@Override
 	public String getCharacterEncoding() {
 		// TODO Auto-generated method stub
-		return null;
+		return "ISO-8859-1";
 	}
 
 	@Override
