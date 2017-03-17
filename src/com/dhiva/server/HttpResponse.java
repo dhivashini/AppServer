@@ -178,6 +178,7 @@ public class HttpResponse implements HttpServletResponse {
 
 	public void addCookie(Cookie arg0) {
 		// TODO Auto-generated method stub
+		
 
 	}
 

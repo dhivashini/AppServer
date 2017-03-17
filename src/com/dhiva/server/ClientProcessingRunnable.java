@@ -62,10 +62,17 @@ public class ClientProcessingRunnable implements Runnable {
 
 	private void processClientRequest(Socket currentClient) throws InterruptedException, IOException {
 		System.out.println("processing on thread ");
-		ReadSocketForParsing socketObj = new ReadSocketForParsing(currentClient);
-		StringBuffer clientRequest = socketObj.readrequest();
-		HttpRequestParser parseObj = new HttpRequestParser(clientRequest);
-		HttpRequest requestObj = parseObj.parse();
+//		ReadSocketForParsing socketObj = new ReadSocketForParsing(currentClient);
+//		StringBuffer clientRequest = socketObj.readrequest();
+		HttpRequestParser parseObj = new HttpRequestParser(currentClient);
+		
+		HttpRequest requestObj = null;
+		try {
+			requestObj = parseObj.parse();
+		} catch (HttpFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		TestHarness testObj = new TestHarness();
 		HashMap<String, HttpServlet> servlets = testObj.getServlets();
 		HashMap<String, String> mappings = testObj.getServeletMapping();
