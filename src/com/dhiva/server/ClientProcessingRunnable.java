@@ -81,6 +81,9 @@ public class ClientProcessingRunnable implements Runnable {
 		if (requestObj.getHttpMethod().equals("GET") && mappings.containsValue(resourceURI)) {
 			invokeServelets(mappings, resourceURI, requestObj, servlets, currentClient);
 		} 
+		if (requestObj.getHttpMethod().equals("POST") && mappings.containsValue(resourceURI)) {
+			invokeServelets(mappings, resourceURI, requestObj, servlets, currentClient);
+		} 
 		else {
 			HttpResponse responseObj = new HttpResponse();
 			CreateResponse createResponseObj = new CreateResponse(requestObj, responseObj);

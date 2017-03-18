@@ -146,7 +146,7 @@ public class CreateResponse {
 				String statusCode = "200 OK";
 				String startTag;
 				String endTag;
-				String image ="";
+				String image = "";
 				String displayName;
 				String link = "";
 
@@ -163,14 +163,14 @@ public class CreateResponse {
 
 				if (myFile.getPath().equals(rootDirectory)) {
 					for (String fileName : results) {
-						startTag = "<!DOCTYPE html> <html><body>"+image+"<a href=\"";
+						startTag = "<!DOCTYPE html> <html><body>" + image + "<a href=\"";
 						endTag = "</a></body> </html><br><br>";
 						displayName = "\">" + fileName;
 						link += startTag + fileName + displayName + endTag;
 					}
 				} else {
 					for (String fileName : results) {
-						startTag = "<!DOCTYPE html> <html> <body>"+image+"<a href=\"";
+						startTag = "<!DOCTYPE html> <html> <body>" + image + "<a href=\"";
 						endTag = "</a></body> </html><br><br>";
 						displayName = "\">" + fileName;
 						link += startTag + myFile.getName() + "/" + fileName + displayName + endTag;
@@ -185,7 +185,41 @@ public class CreateResponse {
 			}
 
 		}
+		if (httpMethod.equals("POST") && (servletResourceUri != null)) {
+			final String FILE_TO_SEND = responseObj.getServletFile();
+			File myFile = new File(FILE_TO_SEND);
+			int statusCode = responseObj.getStatus();
+			String status;
 
+			if (statusCode == 200) {
+				byte[] mybytearray = new byte[(int) myFile.length()];
+				status = "200 OK";
+				BufferedInputStream bis;
+
+				try {
+					bis = new BufferedInputStream(new FileInputStream(myFile));
+					bis.read(mybytearray, 0, mybytearray.length);
+					bis.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				responseObj.setStatusCode(status);
+				responseObj.setHttpVersion(httpVersion);
+				getGMTDateTime();
+				responseObj.setResponseBody(mybytearray);
+				return responseObj;
+			} else {
+				status = "404 Not Found";
+				String htmlBody = "<html><body>" + status + "</body></html>";
+				responseObj.setStatusCode(status);
+				responseObj.setContentType("text/html");
+				getGMTDateTime();
+				responseObj.setContentLength(htmlBody.length());
+				responseObj.setResponseBody(htmlBody.getBytes());
+				return responseObj;
+			}
+		}
 		if (httpMethod.equals("GET") && (servletResourceUri != null)) {
 			final String FILE_TO_SEND = responseObj.getServletFile();
 			File myFile = new File(FILE_TO_SEND);

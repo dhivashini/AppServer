@@ -23,6 +23,7 @@ public class HttpResponse implements HttpServletResponse {
 	private int contentLeng;
 	private String contentType;
 	private String httpVersion;
+	private String cookie;
 	private String date;
 	Socket currentClient;
 	PrintWriter out;
@@ -74,8 +75,9 @@ public class HttpResponse implements HttpServletResponse {
 	}
 
 	public String getResponseHeader() {
-		responseHeader = httpVersion + " " + statusCode + "\r\n" + date + "\r\n" + contentType + "\r\n" + contentLength
+		responseHeader = httpVersion + " " + statusCode + "\r\n" + date + "\r\n" + contentType + "\r\n"+ cookie +"\r\n" + contentLength
 				+ "\r\n\r\n";
+		System.out.println(responseHeader);
 		return responseHeader;
 	}
 
@@ -175,11 +177,11 @@ public class HttpResponse implements HttpServletResponse {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	@Override
 	public void addCookie(Cookie arg0) {
 		// TODO Auto-generated method stub
-		
-
+		this.cookie = "Set-Cookie: " + "name=" + arg0.getValue();
 	}
 
 	public void addDateHeader(String arg0, long arg1) {

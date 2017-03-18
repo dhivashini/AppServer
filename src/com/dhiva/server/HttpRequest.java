@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -28,6 +29,7 @@ public class HttpRequest implements HttpServletRequest {
 	private String resourceURI;
 	private String httpVersion;
 	private HttpMethod httpMethod;
+	private HashMap<String, String> parameters = new HashMap<>();
 
 	public enum HttpMethod {
 		GET("GET"), POST("POST"), PUT("PUT"), DELETE("DELETE"), BAD("BAD"), HEAD("HEAD");
@@ -58,10 +60,14 @@ public class HttpRequest implements HttpServletRequest {
 		this.httpVersion = requestVersion;
 	}
 
+	public void setParameter(String arg0, String arg1) {
+		this.parameters.put(arg0, arg1);
+	}
+
 	public void setRequestURI(String requestFile) {
 		this.resourceURI = requestFile;
 	}
-	
+
 	public String getRequestURI() {
 		return resourceURI;
 	}
@@ -157,7 +163,8 @@ public class HttpRequest implements HttpServletRequest {
 	@Override
 	public String getParameter(String arg0) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return parameters.get(arg0);
 	}
 
 	@Override
@@ -377,8 +384,6 @@ public class HttpRequest implements HttpServletRequest {
 		return null;
 	}
 
-	
-	
 	public StringBuffer getRequestURL() {
 		// TODO Auto-generated method stub
 		return null;
