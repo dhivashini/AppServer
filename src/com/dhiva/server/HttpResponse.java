@@ -181,7 +181,7 @@ public class HttpResponse implements HttpServletResponse {
 	@Override
 	public void addCookie(Cookie arg0) {
 		// TODO Auto-generated method stub
-		this.cookie = "Set-Cookie: " + "name=" + arg0.getValue();
+		this.cookie = "Set-Cookie: " + "username=" + arg0.getValue();
 	}
 
 	public void addDateHeader(String arg0, long arg1) {
